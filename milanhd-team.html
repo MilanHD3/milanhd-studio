@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MilanHD’s Studio – Roblox Game Development</title>
+<style>
+:root{--bg:#07080d;--card:rgba(255,255,255,.045);--line:rgba(140,130,255,.22);--text:#eceefa;--muted:#9aa0bd;--blue:#4f8cff;--violet:#8b5cf6;--open:#6b708a;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#07080d}}
+:root[data-theme="dark"]{--bg:#07080d}
+html{scroll-behavior:smooth;scroll-padding-top:calc(72px + env(safe-area-inset-top,0px))}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(900px 600px at 10% -5%,rgba(79,140,255,.2),transparent 60%),radial-gradient(800px 600px at 100% 20%,rgba(139,92,246,.16),transparent 60%),var(--bg);color:var(--text);font-family:"Segoe UI",system-ui,-apple-system,sans-serif;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:#07080d;z-index:10}
+.w{max-width:1080px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:rgba(7,8,13,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+.logo{font-weight:800;letter-spacing:-.01em;color:var(--text);text-decoration:none;font-size:1.1rem}
+.logo i{font-style:normal;color:var(--violet)}
+.links{display:flex;gap:20px;align-items:center}
+.links a{color:var(--muted);text-decoration:none;font-size:.95rem}
+.links a:hover{color:var(--text)}
+.btn{display:inline-block;padding:11px 22px;border-radius:12px;font-weight:700;text-decoration:none;color:#fff;background:linear-gradient(90deg,var(--blue),var(--violet));box-shadow:0 0 28px rgba(110,100,255,.45)}
+.btn.ghost{background:transparent;border:1px solid var(--line);box-shadow:none;color:var(--text)}
+.links .btn{padding:8px 16px;color:#fff;font-size:.9rem}
+@media(max-width:700px){.links a:not(.btn){display:none}}
+.hero{padding:110px 0 90px}
+h1{font-size:clamp(2.6rem,8vw,5.6rem);line-height:1.02;letter-spacing:-.035em;margin:0 0 22px;max-width:14ch}
+h1 span{background:linear-gradient(90deg,var(--blue),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{font-size:1.2rem;color:var(--muted);max-width:56ch;margin:0 0 32px}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+section{padding:72px 0}
+h2{font-size:clamp(1.7rem,4vw,2.5rem);letter-spacing:-.02em;margin:0 0 12px}
+.sub{color:var(--muted);max-width:60ch;margin:0 0 34px}
+.glass{border:1px solid var(--line);border-radius:18px;background:var(--card);backdrop-filter:blur(12px)}
+.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.game{padding:28px;min-height:230px;display:flex;flex-direction:column;gap:12px}
+.game:hover{border-color:rgba(139,92,246,.65);box-shadow:0 0 36px rgba(139,92,246,.22)}
+.game h3{margin:0;font-size:1.5rem}
+.game p{margin:0;color:var(--muted)}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+.tag{font-size:.8rem;padding:4px 11px;border-radius:999px;border:1px solid var(--line);color:#cfd3f5}
+.tag.live{border-color:rgba(79,140,255,.6);background:rgba(79,140,255,.14);color:#cfe0ff}
+.about{display:grid;grid-template-columns:1.2fr 1fr;gap:34px;align-items:start}
+@media(max-width:800px){.about{grid-template-columns:1fr}}
+.about p{color:var(--muted);margin:0 0 14px}
+.facts{padding:26px;display:grid;gap:16px}
+.facts b{display:block;font-size:1.05rem}
+.facts span{color:var(--muted);font-size:.93rem}
+.owner{padding:26px;margin-bottom:16px;background:linear-gradient(135deg,rgba(79,140,255,.14),rgba(139,92,246,.12));box-shadow:0 0 50px rgba(110,100,255,.2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:14px}
+.card{padding:20px;display:flex;flex-direction:column;gap:10px}
+.head{display:flex;align-items:center;gap:10px}
+.head h3{margin:0;font-size:1.1rem}
+.ico{font-size:1.4rem}
+.tasks{margin:0;color:var(--muted);font-size:.93rem}
+.chip{display:inline-block;font-size:.85rem;padding:4px 11px;border-radius:999px;background:rgba(79,140,255,.14);border:1px solid rgba(79,140,255,.4);color:#cfe0ff;margin:0 6px 6px 0}
+.chip.open{background:transparent;border:1px dashed var(--open);color:var(--open)}
+.join{padding:44px 28px;text-align:center;background:linear-gradient(135deg,rgba(79,140,255,.16),rgba(139,92,246,.16));box-shadow:0 0 60px rgba(110,100,255,.22)}
+.join p{color:var(--muted);max-width:52ch;margin:0 auto 24px}
+.roles{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:0 0 26px}
+footer{border-top:1px solid var(--line);padding:30px 0 40px;color:var(--muted);font-size:.9rem}
+footer .w{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}
+footer a{color:var(--muted)}
+a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header><div class="w"><nav>
+<a class="logo" href="#top">MilanHD’s <i>Studio</i></a>
+<div class="links"><a href="#games">Spiele</a><a href="#studio">Studio</a><a href="#team">Team</a><a class="btn" href="https://discord.gg/gCnnK39uDU" target="_blank" rel="noopener">Discord</a></div>
+</nav></div></header>
+
+<main id="top">
+<div class="w hero">
+<h1>Roblox-Spiele mit <span>Charakter.</span></h1>
+<p>MilanHD’s Studio ist ein unabhängiges Roblox Game Development Studio. Wir entwickeln Hangout-Welten und Horror-Geschichten, gemeinsam mit unserer Community.</p>
+<div class="cta"><a class="btn" href="#games">Unsere Spiele</a><a class="btn ghost" href="#join">Im Team mitmachen</a></div>
+</div>
+
+<section id="games"><div class="w">
+<h2>Unsere Spiele</h2>
+<p class="sub">Zwei Projekte sind in Arbeit. Neuigkeiten und Releases gibt es zuerst auf Discord.</p>
+<div class="games">
+<article class="glass game"><h3>MilanHD Hangout</h3><p>Ein sozialer Treffpunkt zum Chatten, Entdecken und Zeit verbringen mit Freunden.</p><div class="tags"><span class="tag">Social / Hangout</span><span class="tag live">In Entwicklung</span></div></article>
+<article class="glass game"><h3>MilanHD Horror Project</h3><p>Ein Story-Horrorspiel in Kapiteln mit Rätseln, Monstern und einer Geschichte, die sich Stück für Stück öffnet.</p><div class="tags"><span class="tag">Horror / Story</span><span class="tag live">In Entwicklung</span></div></article>
+</div></div></section>
+
+<section id="studio"><div class="w about">
+<div><h2>Das Studio</h2>
+<p>Hinter MilanHD’s Studio steht ein Team aus Buildern, Modelern, Testern und Community-Leuten. Wir bauen Spiele, die wir selbst gern spielen würden.</p>
+<p>Wir arbeiten offen mit der Community: Feedback fließt direkt in Updates, und Tester sind von Anfang an dabei.</p></div>
+<div class="glass facts">
+<div><b>Unabhängig</b><span>Eigene Spiele, eigene Ideen, keine Vorgaben von außen.</span></div>
+<div><b>Community-nah</b><span>Ankündigungen, Umfragen und Tests laufen über unseren Discord.</span></div>
+<div><b>Wachsend</b><span>Mehrere Rollen im Team sind noch offen, vielleicht deine.</span></div>
+</div></div></section>
+
+<section id="team"><div class="w">
+<h2>Das Team</h2>
+<p class="sub" id="count"></p>
+<div id="owner"></div><div class="grid" id="grid"></div>
+</div></section>
+
+<section id="join"><div class="w"><div class="glass join">
+<h2>Werde Teil des Studios</h2>
+<p>Wir suchen Verstärkung. Komm auf unseren Discord, stell dich vor und zeig uns, was du kannst.</p>
+<div class="roles" id="roles"></div>
+<a class="btn" href="https://discord.gg/gCnnK39uDU" target="_blank" rel="noopener">Discord beitreten</a>
+</div></div></section>
+</main>
+
+<footer><div class="w"><span>© 2026 MilanHD’s Studio</span><span><a href="https://discord.gg/gCnnK39uDU" target="_blank" rel="noopener">Discord</a> · <a href="https://www.youtube.com/@MilanHD_YTC/shorts" target="_blank" rel="noopener">YouTube</a></span></div></footer>
+
+<script>
+var TEAM=[
+{i:"👑",r:"Owner (Inhaber)",m:["MilanHD ✞","Dimano"],t:"Studio leiten, Entscheidungen treffen, Updates planen, Team verwalten.",o:1},
+{i:"💻",r:"Lead Developer",m:[],t:"Entwickler leiten, Code kontrollieren, neue Systeme planen."},
+{i:"🖥️",r:"Scripter",m:[],t:"Features programmieren, Bugs beheben, neue Spielsysteme entwickeln."},
+{i:"🏗️",r:"Builder",m:["𝐇𝐨𝐟𝐟𝐢 • :)"],t:"Maps bauen, Gebäude erstellen, Lobby verschönern, Kapitel gestalten."},
+{i:"🎨",r:"UI Designer",m:[],t:"Menüs designen, HUD erstellen, Inventar und Ladebildschirm gestalten."},
+{i:"🧱",r:"3D Modeler",m:["𝙵𝚘𝚛𝚎𝚟𝟹𝚛𝚇 ジ"],t:"3D-Modelle, Gegenstände und Dekorationen erstellen."},
+{i:"🎞️",r:"Animator",m:[],t:"NPC-Animationen, Charakterbewegungen und Zwischensequenzen erstellen."},
+{i:"🎵",r:"Sound Designer",m:[],t:"Musik, Soundeffekte, Gruselgeräusche und Umgebungsgeräusche erstellen."},
+{i:"🧪",r:"Tester",m:["Ben"],t:"Updates testen, Bugs melden, Rätsel überprüfen und Feedback geben."},
+{i:"📷",r:"GFX Designer",m:[],t:"Logos, Thumbnails, Banner, Profilbilder und Icons gestalten."},
+{i:"🎬",r:"Video Editor",m:["MilanHD ✞"],t:"Trailer schneiden, Shorts bearbeiten und Update-Videos erstellen."},
+{i:"📢",r:"Community Manager",m:["Ben"],t:"Discord verwalten, Ankündigungen schreiben, Feedback sammeln und die Community betreuen."},
+{i:"🛡️",r:"Moderator",m:["xLouis"],t:"Regeln durchsetzen, Meldungen bearbeiten, Spam verhindern und bei Streitigkeiten helfen."}
+];
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!==undefined)e.textContent=x;return e}
+var g=document.getElementById("grid"),ow=document.getElementById("owner"),rl=document.getElementById("roles"),open=0;
+TEAM.forEach(function(x){
+var c=el("div",x.o?"glass owner":"glass card"),h=el("div","head");
+h.appendChild(el("span","ico",x.i));h.appendChild(el("h3","",x.r));c.appendChild(h);
+var m=el("div","");
+if(x.m.length){x.m.forEach(function(n){m.appendChild(el("span","chip",n))})}
+else{open++;m.appendChild(el("span","chip open","Noch nicht besetzt"));rl.appendChild(el("span","tag live",x.r))}
+c.appendChild(m);c.appendChild(el("p","tasks",x.t));(x.o?ow:g).appendChild(c);
+});
+document.getElementById("count").textContent=(TEAM.length-open)+" von "+TEAM.length+" Rollen sind besetzt, "+open+" sind offen.";
+</script>
+</body>
+</html>
