@@ -77,6 +77,13 @@ h2{font-size:clamp(1.7rem,4vw,2.5rem);letter-spacing:-.02em;margin:0 0 12px}
 .art .body p{margin:0 0 8px}
 .art .tag{margin-left:0}
 .none{color:var(--muted);padding:20px;text-align:center}
+.news{display:grid;gap:10px}.nitem{padding:16px 20px}.nitem small{color:var(--violet);font-weight:600}.nitem b{display:block}.nitem span{color:var(--muted)}
+.cd{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}.cd div{padding:12px 18px;text-align:center;min-width:76px}.cd b{display:block;font-size:1.8rem}.cd span{color:var(--muted);font-size:.8rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.stat{padding:20px;text-align:center}.stat b{display:block;font-size:2rem}.stat span{color:var(--muted);font-size:.9rem}
+.road{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}.col{padding:18px}.col h3{margin:0 0 10px;font-size:1rem}.col p{margin:0 0 8px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.05);font-size:.93rem}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}.ph{aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.9rem;text-align:center;padding:10px}
+form.ap{display:grid;gap:12px;padding:26px;max-width:620px}form.ap input,form.ap select,form.ap textarea,.adm input{font:inherit;padding:11px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text);width:100%}
+.msg{color:var(--muted);font-size:.93rem}.app{padding:18px;margin-bottom:10px}.app p{margin:4px 0;color:var(--muted)}.acts{display:flex;gap:8px;margin-top:10px}.acts button{font:inherit;padding:7px 14px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--text);cursor:pointer}.st{font-size:.8rem;padding:3px 10px;border-radius:999px;border:1px solid var(--line)}
 footer{border-top:1px solid var(--line);padding:30px 0 40px;color:var(--muted);font-size:.9rem}
 footer .w{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}
 footer a{color:var(--muted)}
@@ -87,7 +94,7 @@ a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 <body>
 <header><div class="w"><nav>
 <a class="logo" href="#top">MilanHD’s <i>Studio</i></a>
-<div class="links"><a href="#games">Spiele</a><a href="#studio">Studio</a><a href="#team">Team</a><a href="#wiki">Wiki</a><a class="btn" href="https://discord.gg/gCnnK39uDU" target="_blank" rel="noopener">Discord</a></div>
+<div class="links"><a href="#games">Spiele</a><a href="#studio">Studio</a><a href="#team">Team</a><a href="#news">News</a><a href="#roadmap">Roadmap</a><a href="#galerie">Galerie</a><a href="#wiki">Wiki</a><a href="#bewerben">Bewerben</a><a class="btn" href="https://discord.gg/gCnnK39uDU" target="_blank" rel="noopener">Discord</a></div>
 </nav></div></header>
 
 <main id="top">
@@ -96,6 +103,13 @@ a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 <p>MilanHD’s Studio ist ein unabhängiges Roblox Game Development Studio. Wir entwickeln Hangout-Welten und Horror-Geschichten, gemeinsam mit unserer Community.</p>
 <div class="cta"><a class="btn" href="#games">Unsere Spiele</a><a class="btn ghost" href="#wiki">Zum Wiki</a><a class="btn ghost" href="#join">Im Team mitmachen</a></div>
 </div>
+
+<section id="news"><div class="w">
+<h2>News &amp; Updates</h2><p class="sub" id="cdl"></p><div class="cd" id="cd"></div>
+<div class="news" id="nw" style="margin:26px 0"></div>
+<div class="stats" id="st"></div>
+<div id="stadm" class="msg" style="margin-top:10px"></div>
+</div></section>
 
 <section id="games"><div class="w">
 <h2>Unsere Spiele</h2>
@@ -115,6 +129,10 @@ a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 <div><b>Wachsend</b><span>Mehrere Rollen im Team sind noch offen, vielleicht deine.</span></div>
 </div></div></section>
 
+<section id="roadmap"><div class="w"><h2>Roadmap</h2><p class="sub">Was ist fertig, was ist in Arbeit, was kommt als Nächstes?</p><div class="road" id="rd"></div></div></section>
+
+<section id="galerie"><div class="w"><h2>Galerie</h2><p class="sub">Screenshots, Trailer und Concept Art. Videos und Shorts findest du auf unserem <a href="https://www.youtube.com/@MilanHD_YTC/shorts" target="_blank" rel="noopener" style="color:var(--blue)">YouTube-Kanal</a>.</p><div class="gal" id="gl"></div></div></section>
+
 <section id="team"><div class="w">
 <h2>Das Team</h2>
 <p class="sub" id="count"></p>
@@ -127,6 +145,12 @@ a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 <div class="wbar"><input id="q" type="search" placeholder="Wiki durchsuchen …" aria-label="Wiki durchsuchen"></div>
 <div class="cats" id="cats"></div>
 <div class="wiki" id="wk"></div>
+</div></section>
+
+<section id="bewerben"><div class="w">
+<h2>Bewerbung</h2><p class="sub">Bewirb dich direkt hier für eine offene Rolle im Studio.</p>
+<form class="glass ap" id="apf"><input id="an" placeholder="Name / Discord-Name" required maxlength="60"><select id="ar"></select><input id="aa" type="number" placeholder="Alter" min="5" max="99"><textarea id="at" rows="4" placeholder="Erzähl uns von dir und was du kannst" required maxlength="1200"></textarea><button class="btn" type="submit">Bewerbung abschicken</button><div class="msg" id="am"></div></form>
+<div id="adm" class="adm" style="margin-top:34px"></div>
 </div></section>
 
 <section id="join"><div class="w"><div class="glass join">
@@ -195,6 +219,42 @@ if(!n)wk.appendChild(el("div","none","Keine Wiki-Einträge gefunden."));
 cats.forEach(function(c){var b=el("button","cat"+(c===cur?" on":""),c);b.type="button";
 b.onclick=function(){cur=c;[].forEach.call(cb.children,function(x){x.className="cat"+(x.textContent===c?" on":"")});draw()};cb.appendChild(b)});
 q.addEventListener("input",draw);draw();
+
+/* News, Roadmap, Galerie, Countdown, Zahlen, Bewerbung */
+var NEWS=[{d:"21.10.2026",t:"Wiki online",b:"Das Studio-Wiki ist jetzt auf der Website verfügbar."},{d:"21.10.2026",t:"Bewerbungen offen",b:"Du kannst dich ab sofort direkt über die Website bewerben."}];
+var ROAD=[["Fertig",["Studio-Website","Wiki"]],["In Arbeit",["MilanHD Hangout","MilanHD Horror Project – Kapitel 1"]],["Geplant",["Erster öffentlicher Test","Horror Project Release (16.10.2027)"]]];
+var CD={label:"Release von MilanHD Horror Project am 16.10.2027",date:"2027-10-16T00:00:00"};
+var GAL=["Screenshot folgt","Screenshot folgt","Trailer folgt","Concept Art folgt"];
+var $=function(i){return document.getElementById(i)};
+NEWS.forEach(function(n){var c=el("div","glass nitem");c.appendChild(el("small","",n.d));c.appendChild(el("b","",n.t));c.appendChild(el("span","",n.b));$("nw").appendChild(c)});
+ROAD.forEach(function(r){var c=el("div","glass col");c.appendChild(el("h3","",r[0]));r[1].forEach(function(x){c.appendChild(el("p","",x))});$("rd").appendChild(c)});
+GAL.forEach(function(x){$("gl").appendChild(el("div","glass ph",x))});
+function tick(){var b=$("cd");b.textContent="";if(!CD.date){$("cdl").textContent=CD.label+": Termin folgt. Neuigkeiten zuerst auf Discord.";return}
+$("cdl").textContent=CD.label;var s=Math.max(0,Math.floor((new Date(CD.date)-new Date())/1000)),p=[["Tage",86400],["Std",3600],["Min",60],["Sek",1]];
+p.forEach(function(u){var v=Math.floor(s/u[1]);s-=v*u[1];var d=el("div","glass");d.appendChild(el("b","",String(v)));d.appendChild(el("span","",u[0]));b.appendChild(d)})}
+tick();setInterval(tick,1000);
+var SL=[["players","Spieler online"],["visits","Besuche"],["members","Discord-Mitglieder"]];
+function stats(v){$("st").textContent="";SL.forEach(function(s){var c=el("div","glass stat");c.appendChild(el("b","",v&&v[s[0]]!=null?String(v[s[0]]):"–"));c.appendChild(el("span","",s[1]));$("st").appendChild(c)})}
+stats(null);
+TEAM.forEach(function(x){if(!x.m.length){var o=el("option","",x.r);$("ar").appendChild(o)}});
+var ST={Neu:"Neu",Angenommen:"Angenommen ✅",Abgelehnt:"Abgelehnt ❌"};
+(async function(){
+var db=null,user=null;try{db=await claude.use("db");user=await claude.use("user")}catch(e){}
+var admin=false,uid=null;try{admin=user?await user.canEdit():false;uid=user?await user.id():null}catch(e){}
+if(!db){$("am").textContent="Das Bewerbungsformular ist in dieser Ansicht nicht verfügbar. Bewirb dich bitte auf unserem Discord.";$("apf").querySelector("button").disabled=true;return}
+try{db.doc("site/stats").onSnapshot(function(s){stats(s.exists?s.data():null)},function(){})}catch(e){}
+var canW=true;try{canW=user?(await user.can("data.write"))!==false:false}catch(e){}
+if(!canW||!uid)$("am").textContent="Zum Absenden musst du eingeloggt sein. Sonst bewirb dich bitte auf Discord.";
+$("apf").addEventListener("submit",async function(e){e.preventDefault();$("am").textContent="Wird gesendet …";
+try{await db.doc("applications/"+uid).set({name:$("an").value,role:$("ar").value,age:$("aa").value,text:$("at").value,status:"Neu",at:new Date().toISOString()});$("am").textContent="Danke! Deine Bewerbung ist angekommen.";$("apf").reset()}catch(x){$("am").textContent="Senden nicht möglich. Bitte bewirb dich auf unserem Discord."}});
+if(!admin)return;
+var a=$("adm");a.appendChild(el("h2","","Admin: Bewerbungen"));var lst=el("div","");a.appendChild(lst);
+var sd=$("stadm");sd.textContent="Admin: Zahlen setzen ";SL.forEach(function(s){var i=document.createElement("input");i.type="number";i.placeholder=s[1];i.style.cssText="width:150px;margin:4px";i.id="s_"+s[0];sd.appendChild(i)});
+var sb=el("button","cat","Speichern");sb.onclick=function(){var o={};SL.forEach(function(s){var v=$("s_"+s[0]).value;if(v!=="")o[s[0]]=Number(v)});db.doc("site/stats").set(o)};sd.appendChild(sb);
+db.collection("applications").onSnapshot(function(sn){lst.textContent="";if(sn.empty){lst.appendChild(el("p","msg","Noch keine Bewerbungen."));return}
+sn.docs.forEach(function(d){var v=d.data(),c=el("div","glass app");c.appendChild(el("b","",v.name+" → "+v.role));c.appendChild(el("span","st",ST[v.status]||v.status));c.appendChild(el("p","","Alter: "+(v.age||"–")));c.appendChild(el("p","",v.text));
+var ac=el("div","acts");[["Angenommen","Annehmen"],["Abgelehnt","Ablehnen"]].forEach(function(k){var b=el("button","",k[1]);b.onclick=function(){db.doc("applications/"+d.id).update({status:k[0]})};ac.appendChild(b)});c.appendChild(ac);lst.appendChild(c)})},function(){})
+})();
 </script>
 </body>
 </html>
