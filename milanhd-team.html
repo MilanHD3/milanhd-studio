@@ -246,14 +246,23 @@ try{db.doc("site/stats").onSnapshot(function(s){stats(s.exists?s.data():null)},f
 var canW=true;try{canW=user?(await user.can("data.write"))!==false:false}catch(e){}
 if(!canW||!uid)$("am").textContent="Zum Absenden musst du eingeloggt sein. Sonst bewirb dich bitte auf Discord.";
 $("apf").addEventListener("submit",async function(e){e.preventDefault();$("am").textContent="Wird gesendet …";
-try{await db.doc("applications/"+uid).set({name:$("an").value,role:$("ar").value,age:$("aa").value,text:$("at").value,status:"Neu",at:new Date().toISOString()});$("am").textContent="Danke! Deine Bewerbung ist angekommen.";$("apf").reset()}catch(x){$("am").textContent="Senden nicht möglich. Bitte bewirb dich auf unserem Discord."}});
-if(!admin)return;
-var a=$("adm");a.appendChild(el("h2","","Admin: Bewerbungen"));var lst=el("div","");a.appendChild(lst);
+try{await db.doc("applications/"+uid).set({name:$("an").value,role:$("ar").value,age:$("aa").value,text:$("at").value,status:"Neu",at:new Date().toISOString()});$("am").textContent="Danke! Deine Bewerbung ist angekommen.";$("apf").reset()}catch(x){var T="Bewerbung\nName: "+$("an").value+"\nRolle: "+$("ar").value+"\nAlter: "+$("aa").value+"\n"+$("at").value;$("am").textContent="Direktes Senden ist für dich nicht möglich. Kopiere diesen Text und schick ihn uns auf Discord:";var ta=el("textarea","",T);ta.readOnly=true;ta.rows=5;ta.style.cssText="margin-top:8px";ta.onclick=function(){ta.select()};$("am").appendChild(ta)}});
+var a=$("adm"),H="89125ae87074abac73954debc69f4b9c40dc7de9e97f01e2de90891ceaf4b247";
+var gb=el("button","btn ghost","🔒 Admin-Bereich");gb.type="button";a.appendChild(gb);
+var gf=el("div","");gf.style.cssText="display:none;gap:8px;margin-top:12px;max-width:420px";var gi=document.createElement("input");gi.type="password";gi.placeholder="Admin-Passwort";var go=el("button","btn","Entsperren");go.type="button";var gm=el("div","msg");gm.style.marginTop="8px";gf.appendChild(gi);gf.appendChild(go);a.appendChild(gf);a.appendChild(gm);
+gb.onclick=function(){gf.style.display="flex";gi.focus()};
+async function unlock(){var h=Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256",new TextEncoder().encode(gi.value)))).map(function(x){return x.toString(16).padStart(2,"0")}).join("");
+if(h!==H){gm.textContent="Falsches Passwort.";return}
+if(!admin){gm.textContent="Passwort stimmt, aber du musst auf claude.ai mit dem Owner-Account eingeloggt sein, um Bewerbungen zu sehen.";return}
+gb.remove();gf.remove();gm.remove();openAdmin()}
+go.onclick=unlock;gi.addEventListener("keydown",function(e){if(e.key==="Enter")unlock()});
+function openAdmin(){a.appendChild(el("h2","","Admin: Bewerbungen"));var lst=el("div","");a.appendChild(lst);
 var sd=$("stadm");sd.textContent="Admin: Zahlen setzen ";SL.forEach(function(s){var i=document.createElement("input");i.type="number";i.placeholder=s[1];i.style.cssText="width:150px;margin:4px";i.id="s_"+s[0];sd.appendChild(i)});
 var sb=el("button","cat","Speichern");sb.onclick=function(){var o={};SL.forEach(function(s){var v=$("s_"+s[0]).value;if(v!=="")o[s[0]]=Number(v)});db.doc("site/stats").set(o)};sd.appendChild(sb);
 db.collection("applications").onSnapshot(function(sn){lst.textContent="";if(sn.empty){lst.appendChild(el("p","msg","Noch keine Bewerbungen."));return}
 sn.docs.forEach(function(d){var v=d.data(),c=el("div","glass app");c.appendChild(el("b","",v.name+" → "+v.role));c.appendChild(el("span","st",ST[v.status]||v.status));c.appendChild(el("p","","Alter: "+(v.age||"–")));c.appendChild(el("p","",v.text));
 var ac=el("div","acts");[["Angenommen","Annehmen"],["Abgelehnt","Ablehnen"]].forEach(function(k){var b=el("button","",k[1]);b.onclick=function(){db.doc("applications/"+d.id).update({status:k[0]})};ac.appendChild(b)});c.appendChild(ac);lst.appendChild(c)})},function(){})
+}
 })();
 </script>
 </body>
