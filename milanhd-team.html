@@ -60,6 +60,23 @@ h2{font-size:clamp(1.7rem,4vw,2.5rem);letter-spacing:-.02em;margin:0 0 12px}
 .join{padding:44px 28px;text-align:center;background:linear-gradient(135deg,rgba(79,140,255,.16),rgba(139,92,246,.16));box-shadow:0 0 60px rgba(110,100,255,.22)}
 .join p{color:var(--muted);max-width:52ch;margin:0 auto 24px}
 .roles{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:0 0 26px}
+/* Wiki */
+.wbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+.wbar input{flex:1 1 240px;padding:12px 16px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text);font:inherit}
+.wbar input:focus{outline:2px solid var(--blue)}
+.cats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.cat{font:inherit;font-size:.9rem;padding:7px 15px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer}
+.cat.on{background:linear-gradient(90deg,var(--blue),var(--violet));color:#fff;border-color:transparent}
+.wiki{display:grid;gap:10px}
+.art{padding:0;overflow:hidden}
+.art summary{cursor:pointer;list-style:none;padding:16px 20px;display:flex;align-items:center;gap:12px;font-weight:600}
+.art summary::-webkit-details-marker{display:none}
+.art summary::after{content:"+";margin-left:auto;color:var(--violet);font-size:1.4rem}
+.art[open] summary::after{content:"–"}
+.art .body{padding:0 20px 18px;color:var(--muted)}
+.art .body p{margin:0 0 8px}
+.art .tag{margin-left:0}
+.none{color:var(--muted);padding:20px;text-align:center}
 footer{border-top:1px solid var(--line);padding:30px 0 40px;color:var(--muted);font-size:.9rem}
 footer .w{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}
 footer a{color:var(--muted)}
@@ -70,14 +87,14 @@ a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 <body>
 <header><div class="w"><nav>
 <a class="logo" href="#top">MilanHD’s <i>Studio</i></a>
-<div class="links"><a href="#games">Spiele</a><a href="#studio">Studio</a><a href="#team">Team</a><a class="btn" href="https://discord.gg/gCnnK39uDU" target="_blank" rel="noopener">Discord</a></div>
+<div class="links"><a href="#games">Spiele</a><a href="#studio">Studio</a><a href="#team">Team</a><a href="#wiki">Wiki</a><a class="btn" href="https://discord.gg/gCnnK39uDU" target="_blank" rel="noopener">Discord</a></div>
 </nav></div></header>
 
 <main id="top">
 <div class="w hero">
 <h1>Roblox-Spiele mit <span>Charakter.</span></h1>
 <p>MilanHD’s Studio ist ein unabhängiges Roblox Game Development Studio. Wir entwickeln Hangout-Welten und Horror-Geschichten, gemeinsam mit unserer Community.</p>
-<div class="cta"><a class="btn" href="#games">Unsere Spiele</a><a class="btn ghost" href="#join">Im Team mitmachen</a></div>
+<div class="cta"><a class="btn" href="#games">Unsere Spiele</a><a class="btn ghost" href="#wiki">Zum Wiki</a><a class="btn ghost" href="#join">Im Team mitmachen</a></div>
 </div>
 
 <section id="games"><div class="w">
@@ -102,6 +119,14 @@ a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 <h2>Das Team</h2>
 <p class="sub" id="count"></p>
 <div id="owner"></div><div class="grid" id="grid"></div>
+</div></section>
+
+<section id="wiki"><div class="w">
+<h2>Wiki</h2>
+<p class="sub">Alles Wichtige zu unseren Spielen, dem Team und der Community an einem Ort. Suche einen Begriff oder wähle eine Kategorie.</p>
+<div class="wbar"><input id="q" type="search" placeholder="Wiki durchsuchen …" aria-label="Wiki durchsuchen"></div>
+<div class="cats" id="cats"></div>
+<div class="wiki" id="wk"></div>
 </div></section>
 
 <section id="join"><div class="w"><div class="glass join">
@@ -141,6 +166,35 @@ else{open++;m.appendChild(el("span","chip open","Noch nicht besetzt"));rl.append
 c.appendChild(m);c.appendChild(el("p","tasks",x.t));(x.o?ow:g).appendChild(c);
 });
 document.getElementById("count").textContent=(TEAM.length-open)+" von "+TEAM.length+" Rollen sind besetzt, "+open+" sind offen.";
+
+/* Wiki */
+var WIKI=[
+{c:"Spiele",t:"MilanHD Hangout",b:["Sozialer Treffpunkt in Roblox zum Chatten, Entdecken und Zeit verbringen mit Freunden.","Status: In Entwicklung. Releases und Tests werden zuerst auf Discord angekündigt."]},
+{c:"Spiele",t:"MilanHD Horror Project",b:["Story-Horrorspiel in Kapiteln mit Rätseln, Monstern und einer Geschichte, die sich Stück für Stück öffnet.","Status: In Entwicklung. Kapitel 1 wird aktuell ausgearbeitet."]},
+{c:"Spiele",t:"Wann erscheinen die Spiele?",b:["Es gibt noch keine festen Release-Termine. Neuigkeiten, Updates und Testphasen posten wir zuerst auf unserem Discord."]},
+{c:"Team",t:"Rollen im Studio",b:["Owner, Lead Developer, Scripter, Builder, UI Designer, 3D Modeler, Animator, Sound Designer, Tester, GFX Designer, Video Editor, Community Manager und Moderator.","Die Aufgaben jeder Rolle und wer sie besetzt, findest du im Bereich „Das Team“."]},
+{c:"Team",t:"Wie kann ich im Team mitmachen?",b:["Tritt unserem Discord bei, stell dich kurz vor und zeig uns, was du kannst (z. B. Builds, Modelle, Skripte oder Designs).","Besonders gesucht sind die Rollen, die auf der Seite als „Noch nicht besetzt“ markiert sind."]},
+{c:"Community",t:"Discord",b:["Unser Discord ist die Zentrale für Ankündigungen, Umfragen, Tests, Support und Feedback.","Einladung: https://discord.gg/gCnnK39uDU"]},
+{c:"Community",t:"Bugs melden & Feedback geben",b:["Melde Bugs und Ideen auf dem Discord. Gib an, was passiert ist, wo im Spiel es passierte und, wenn möglich, einen Screenshot.","Tester prüfen Meldungen und geben sie an die Entwickler weiter."]},
+{c:"Community",t:"Regeln",b:["Sei respektvoll, kein Spam, keine Beleidigungen, keine Werbung ohne Erlaubnis.","Moderatoren setzen die Regeln durch und helfen bei Streitigkeiten."]},
+{c:"Allgemein",t:"Was ist MilanHD’s Studio?",b:["Ein unabhängiges Roblox Game Development Studio mit Fokus auf Hangout-Welten und Horror-Geschichten, entwickelt gemeinsam mit der Community."]},
+{c:"Allgemein",t:"Wo finde ich Videos?",b:["Auf unserem YouTube-Kanal: https://www.youtube.com/@MilanHD_YTC/shorts"]}
+];
+var cats=["Alle"].concat(WIKI.map(function(a){return a.c}).filter(function(v,i,a){return a.indexOf(v)===i})),cur="Alle",wk=document.getElementById("wk"),cb=document.getElementById("cats"),q=document.getElementById("q");
+function draw(){
+var s=q.value.trim().toLowerCase(),n=0;wk.textContent="";
+WIKI.forEach(function(a){
+if(cur!=="Alle"&&a.c!==cur)return;
+if(s&&(a.t+" "+a.b.join(" ")+" "+a.c).toLowerCase().indexOf(s)<0)return;
+n++;var d=el("details","glass art"),m=el("summary","");
+m.appendChild(el("span","tag",a.c));m.appendChild(el("span","",a.t));d.appendChild(m);
+var b=el("div","body");a.b.forEach(function(p){b.appendChild(el("p","",p))});d.appendChild(b);
+if(s)d.open=true;wk.appendChild(d)});
+if(!n)wk.appendChild(el("div","none","Keine Wiki-Einträge gefunden."));
+}
+cats.forEach(function(c){var b=el("button","cat"+(c===cur?" on":""),c);b.type="button";
+b.onclick=function(){cur=c;[].forEach.call(cb.children,function(x){x.className="cat"+(x.textContent===c?" on":"")});draw()};cb.appendChild(b)});
+q.addEventListener("input",draw);draw();
 </script>
 </body>
 </html>
