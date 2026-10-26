@@ -1,0 +1,298 @@
+<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
+<Item class="Script" referent="RBX0">
+<Properties>
+<string name="Name">HorrorHubBuilder</string>
+<token name="RunContext">0</token>
+<bool name="Disabled">false</bool>
+<ProtectedString name="Source"><![CDATA[--[[
+	HORROR HUB – "Coming Soon" Lobby
+	Baut beim Start automatisch eine dunkle Hub-Map mit Schild, Countdown,
+	flackernden Lampen, Nebel und verschlossener Kapitel-Tür.
+	Alle Einstellungen findest du direkt hier oben in CONFIG.
+]]
+
+local Lighting = game:GetService("Lighting")
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+
+-- ===================== EINSTELLUNGEN =====================
+local CONFIG = {
+	Studio = "VYROX STUDIOS PRÄSENTIERT",
+	GameTitle = "HORROR PROJECT",          -- Spieltitel auf dem Schild
+	Subtitle = "KAPITEL 1",
+	Discord = "Discord: discord.gg/NrqHgxPaRA",
+	ComingSoonText = "COMING SOON",
+	ReleasedText = "JETZT VERFÜGBAR",
+	DoorMessage = "Die Tür ist verschlossen... noch.",
+
+	-- Release-Datum (UTC). Auf nil setzen = nur "COMING SOON" anzeigen.
+	-- Beispiel: os.time({year = 2026, month = 12, day = 24, hour = 18, min = 0, sec = 0})
+	ReleaseTime = nil,
+
+	-- Optional: Sound-ID für Ambiente-Musik, z. B. "rbxassetid://123456789"
+	AmbientSoundId = nil,
+
+	AccentColor = Color3.fromRGB(190, 25, 35),
+}
+-- =========================================================
+
+local rng = Random.new()
+
+-- Alte Version entfernen, falls das Skript erneut läuft
+local old = workspace:FindFirstChild("HorrorHub")
+if old then old:Destroy() end
+
+local hub = Instance.new("Folder")
+hub.Name = "HorrorHub"
+hub.Parent = workspace
+
+local function makePart(name, size, pos, color, material, parent)
+	local p = Instance.new("Part")
+	p.Name = name
+	p.Size = size
+	p.Position = pos
+	p.Color = color
+	p.Material = material
+	p.Anchored = true
+	p.TopSurface = Enum.SurfaceType.Smooth
+	p.BottomSurface = Enum.SurfaceType.Smooth
+	p.Parent = parent or hub
+	return p
+end
+
+local function makeLabel(parent, text, pos, size, font, color)
+	local l = Instance.new("TextLabel")
+	l.BackgroundTransparency = 1
+	l.Position = pos
+	l.Size = size
+	l.Font = font
+	l.Text = text
+	l.TextColor3 = color
+	l.TextScaled = true
+	l.Parent = parent
+	return l
+end
+
+local function flicker(light, base)
+	task.spawn(function()
+		while light.Parent do
+			task.wait(rng:NextNumber(3, 12))
+			for _ = 1, rng:NextInteger(2, 6) do
+				if not light.Parent then return end
+				light.Brightness = rng:NextNumber(0, base * 0.4)
+				task.wait(rng:NextNumber(0.03, 0.15))
+				light.Brightness = base
+				task.wait(rng:NextNumber(0.03, 0.2))
+			end
+		end
+	end)
+end
+
+-- ===================== ATMOSPHÄRE =====================
+Lighting.ClockTime = 0
+Lighting.Brightness = 0
+Lighting.Ambient = Color3.fromRGB(14, 14, 18)
+Lighting.OutdoorAmbient = Color3.fromRGB(14, 14, 18)
+Lighting.EnvironmentDiffuseScale = 0
+Lighting.EnvironmentSpecularScale = 0
+Lighting.FogColor = Color3.fromRGB(8, 8, 10)
+Lighting.FogStart = 20
+Lighting.FogEnd = 140
+
+for _, name in ipairs({ "HubAtmosphere", "HubColor", "HubBloom" }) do
+	local e = Lighting:FindFirstChild(name)
+	if e then e:Destroy() end
+end
+
+local atmosphere = Instance.new("Atmosphere")
+atmosphere.Name = "HubAtmosphere"
+atmosphere.Density = 0.35
+atmosphere.Color = Color3.fromRGB(40, 40, 48)
+atmosphere.Decay = Color3.fromRGB(20, 20, 26)
+atmosphere.Haze = 1.5
+atmosphere.Parent = Lighting
+
+local cc = Instance.new("ColorCorrectionEffect")
+cc.Name = "HubColor"
+cc.Saturation = -0.3
+cc.Contrast = 0.1
+cc.TintColor = Color3.fromRGB(235, 235, 245)
+cc.Parent = Lighting
+
+local bloom = Instance.new("BloomEffect")
+bloom.Name = "HubBloom"
+bloom.Intensity = 0.3
+bloom.Size = 20
+bloom.Threshold = 1.2
+bloom.Parent = Lighting
+
+-- ===================== RAUM =====================
+local dark = Color3.fromRGB(24, 24, 28)
+local wallColor = Color3.fromRGB(32, 30, 34)
+
+makePart("Floor", Vector3.new(80, 1, 80), Vector3.new(0, -0.5, 0), Color3.fromRGB(20, 20, 22), Enum.Material.Slate)
+makePart("Ceiling", Vector3.new(84, 1, 84), Vector3.new(0, 14.5, 0), dark, Enum.Material.Concrete)
+makePart("WallNorth", Vector3.new(84, 14, 2), Vector3.new(0, 7, -41), wallColor, Enum.Material.Concrete)
+makePart("WallSouth", Vector3.new(84, 14, 2), Vector3.new(0, 7, 41), wallColor, Enum.Material.Concrete)
+makePart("WallEast", Vector3.new(2, 14, 80), Vector3.new(41, 7, 0), wallColor, Enum.Material.Concrete)
+makePart("WallWest", Vector3.new(2, 14, 80), Vector3.new(-41, 7, 0), wallColor, Enum.Material.Concrete)
+
+for _, x in ipairs({ -25, 25 }) do
+	for _, z in ipairs({ -15, 15 }) do
+		makePart("Pillar", Vector3.new(3, 14, 3), Vector3.new(x, 7, z), dark, Enum.Material.Concrete)
+	end
+end
+
+-- Spawn (dunkler Teppich)
+local spawn = Instance.new("SpawnLocation")
+spawn.Name = "HubSpawn"
+spawn.Size = Vector3.new(12, 0.4, 12)
+spawn.Position = Vector3.new(0, 0.2, 22)
+spawn.Anchored = true
+spawn.Neutral = true
+spawn.Duration = 0
+spawn.Material = Enum.Material.Fabric
+spawn.Color = Color3.fromRGB(70, 12, 18)
+spawn.TopSurface = Enum.SurfaceType.Smooth
+spawn.Parent = hub
+
+-- ===================== LAMPEN =====================
+local lampPositions = {
+	Vector3.new(-25, 13.5, -25), Vector3.new(25, 13.5, -25),
+	Vector3.new(-25, 13.5, 0), Vector3.new(25, 13.5, 0),
+	Vector3.new(-25, 13.5, 25), Vector3.new(25, 13.5, 25),
+}
+for i, pos in ipairs(lampPositions) do
+	local lamp = makePart("Lamp" .. i, Vector3.new(3, 0.4, 3), pos, Color3.fromRGB(255, 214, 150), Enum.Material.Neon)
+	lamp.CanCollide = false
+	local light = Instance.new("PointLight")
+	light.Color = Color3.fromRGB(255, 200, 130)
+	light.Range = 24
+	light.Brightness = 1.1
+	light.Shadows = true
+	light.Parent = lamp
+	flicker(light, 1.1)
+end
+
+-- ===================== SCHILD MIT COUNTDOWN =====================
+local sign = makePart("SignBoard", Vector3.new(44, 12, 0.5), Vector3.new(0, 7.5, -39.75), Color3.fromRGB(8, 8, 10), Enum.Material.SmoothPlastic)
+
+local signGui = Instance.new("SurfaceGui")
+signGui.Name = "SignGui"
+signGui.Face = Enum.NormalId.Back -- zeigt in Richtung Raummitte
+signGui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
+signGui.PixelsPerStud = 40
+signGui.LightInfluence = 0
+signGui.Parent = sign
+
+local white = Color3.fromRGB(235, 235, 240)
+local gray = Color3.fromRGB(140, 140, 150)
+
+makeLabel(signGui, CONFIG.Studio, UDim2.fromScale(0.1, 0.04), UDim2.fromScale(0.8, 0.08), Enum.Font.GothamMedium, gray)
+makeLabel(signGui, CONFIG.GameTitle, UDim2.fromScale(0.05, 0.14), UDim2.fromScale(0.9, 0.34), Enum.Font.Creepster, CONFIG.AccentColor)
+makeLabel(signGui, CONFIG.Subtitle, UDim2.fromScale(0.3, 0.5), UDim2.fromScale(0.4, 0.09), Enum.Font.GothamBold, white)
+local countdown = makeLabel(signGui, CONFIG.ComingSoonText, UDim2.fromScale(0.15, 0.62), UDim2.fromScale(0.7, 0.16), Enum.Font.Code, white)
+local units = makeLabel(signGui, "TAGE        STUNDEN        MINUTEN        SEKUNDEN", UDim2.fromScale(0.15, 0.79), UDim2.fromScale(0.7, 0.04), Enum.Font.GothamMedium, gray)
+makeLabel(signGui, CONFIG.Discord, UDim2.fromScale(0.2, 0.89), UDim2.fromScale(0.6, 0.06), Enum.Font.Gotham, gray)
+
+local signLightPart = makePart("SignLight", Vector3.new(1, 1, 1), Vector3.new(0, 8, -34), Color3.new(0, 0, 0), Enum.Material.SmoothPlastic)
+signLightPart.Transparency = 1
+signLightPart.CanCollide = false
+local signLight = Instance.new("PointLight")
+signLight.Color = CONFIG.AccentColor
+signLight.Range = 30
+signLight.Brightness = 1.6
+signLight.Parent = signLightPart
+flicker(signLight, 1.6)
+
+if CONFIG.ReleaseTime then
+	task.spawn(function()
+		while countdown.Parent do
+			local remaining = CONFIG.ReleaseTime - os.time()
+			if remaining <= 0 then
+				countdown.Text = CONFIG.ReleasedText
+				units.Visible = false
+				break
+			end
+			local d = math.floor(remaining / 86400)
+			local h = math.floor((remaining % 86400) / 3600)
+			local m = math.floor((remaining % 3600) / 60)
+			local s = remaining % 60
+			countdown.Text = string.format("%02d : %02d : %02d : %02d", d, h, m, s)
+			task.wait(1)
+		end
+	end)
+else
+	units.Visible = false
+end
+
+-- ===================== VERSCHLOSSENE TÜR =====================
+local door = makePart("ChapterDoor", Vector3.new(1, 11, 8), Vector3.new(39.5, 5.5, 0), Color3.fromRGB(45, 28, 18), Enum.Material.WoodPlanks)
+
+local doorGui = Instance.new("SurfaceGui")
+doorGui.Face = Enum.NormalId.Left -- zeigt in Richtung Raummitte
+doorGui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
+doorGui.PixelsPerStud = 50
+doorGui.LightInfluence = 0.3
+doorGui.Parent = door
+makeLabel(doorGui, "KAPITEL 1", UDim2.fromScale(0.1, 0.25), UDim2.fromScale(0.8, 0.12), Enum.Font.GothamBold, white)
+makeLabel(doorGui, "GESPERRT", UDim2.fromScale(0.1, 0.4), UDim2.fromScale(0.8, 0.12), Enum.Font.Creepster, CONFIG.AccentColor)
+
+local doorLampPart = makePart("DoorLight", Vector3.new(1, 1, 1), Vector3.new(36, 11, 0), Color3.new(0, 0, 0), Enum.Material.SmoothPlastic)
+doorLampPart.Transparency = 1
+doorLampPart.CanCollide = false
+local doorLight = Instance.new("PointLight")
+doorLight.Color = CONFIG.AccentColor
+doorLight.Range = 16
+doorLight.Brightness = 1
+doorLight.Parent = doorLampPart
+flicker(doorLight, 1)
+
+local prompt = Instance.new("ProximityPrompt")
+prompt.ActionText = "Öffnen"
+prompt.ObjectText = "Kapitel 1"
+prompt.HoldDuration = 0.6
+prompt.MaxActivationDistance = 10
+prompt.RequiresLineOfSight = false
+prompt.Parent = door
+
+local cooldown = {}
+local function notify(player, text)
+	local pg = player:FindFirstChild("PlayerGui")
+	if not pg then return end
+	local gui = Instance.new("ScreenGui")
+	gui.Name = "HubNotice"
+	gui.ResetOnSpawn = false
+	gui.IgnoreGuiInset = true
+	local l = makeLabel(gui, text, UDim2.fromScale(0.25, 0.78), UDim2.fromScale(0.5, 0.06), Enum.Font.GothamMedium, white)
+	l.TextStrokeTransparency = 0.4
+	gui.Parent = pg
+	task.delay(2.5, function()
+		TweenService:Create(l, TweenInfo.new(0.6), { TextTransparency = 1, TextStrokeTransparency = 1 }):Play()
+		task.wait(0.7)
+		gui:Destroy()
+	end)
+end
+
+prompt.Triggered:Connect(function(player)
+	if cooldown[player] then return end
+	cooldown[player] = true
+	notify(player, CONFIG.DoorMessage)
+	task.delay(3, function() cooldown[player] = nil end)
+end)
+Players.PlayerRemoving:Connect(function(p) cooldown[p] = nil end)
+
+-- ===================== AMBIENTE-SOUND (optional) =====================
+if CONFIG.AmbientSoundId then
+	local s = Instance.new("Sound")
+	s.Name = "Ambient"
+	s.SoundId = CONFIG.AmbientSoundId
+	s.Looped = true
+	s.Volume = 0.5
+	s.Parent = hub
+	s:Play()
+end
+]]></ProtectedString>
+</Properties>
+</Item>
+</roblox>
