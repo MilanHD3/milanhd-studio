@@ -3,267 +3,185 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>VYROX Studios – Roblox Game Development</title>
+<title>VYROX Studios – Build Beyond Limits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#07080d;--card:rgba(255,255,255,.045);--line:rgba(140,130,255,.22);--text:#eceefa;--muted:#9aa0bd;--blue:#4f8cff;--violet:#8b5cf6;--open:#6b708a;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#07080d}}
-:root[data-theme="dark"]{--bg:#07080d}
-html{scroll-behavior:smooth;scroll-padding-top:calc(72px + env(safe-area-inset-top,0px))}
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(900px 600px at 10% -5%,rgba(79,140,255,.2),transparent 60%),radial-gradient(800px 600px at 100% 20%,rgba(139,92,246,.16),transparent 60%),var(--bg);color:var(--text);font-family:"Segoe UI",system-ui,-apple-system,sans-serif;line-height:1.6}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:#07080d;z-index:10}
-.w{max-width:1080px;margin:0 auto;padding:0 20px}
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:rgba(7,8,13,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-nav{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
-.logo{font-weight:800;letter-spacing:-.01em;color:var(--text);text-decoration:none;font-size:1.1rem}
-.logo i{font-style:normal;color:var(--violet)}
-.links{display:flex;gap:20px;align-items:center}
-.links a{color:var(--muted);text-decoration:none;font-size:.95rem}
-.links a:hover{color:var(--text)}
-.btn{display:inline-block;padding:11px 22px;border-radius:12px;font-weight:700;text-decoration:none;color:#fff;background:linear-gradient(90deg,var(--blue),var(--violet));box-shadow:0 0 28px rgba(110,100,255,.45)}
-.btn.ghost{background:transparent;border:1px solid var(--line);box-shadow:none;color:var(--text)}
-.links .btn{padding:8px 16px;color:#fff;font-size:.9rem}
-@media(max-width:700px){.links a:not(.btn){display:none}}
-.hero{padding:110px 0 90px}
-h1{font-size:clamp(2.6rem,8vw,5.6rem);line-height:1.02;letter-spacing:-.035em;margin:0 0 22px;max-width:14ch}
-h1 span{background:linear-gradient(90deg,var(--blue),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p{font-size:1.2rem;color:var(--muted);max-width:56ch;margin:0 0 32px}
-.cta{display:flex;flex-wrap:wrap;gap:12px}
-section{padding:72px 0}
-h2{font-size:clamp(1.7rem,4vw,2.5rem);letter-spacing:-.02em;margin:0 0 12px}
-.sub{color:var(--muted);max-width:60ch;margin:0 0 34px}
-.glass{border:1px solid var(--line);border-radius:18px;background:var(--card);backdrop-filter:blur(12px)}
-.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
-.game{padding:28px;min-height:230px;display:flex;flex-direction:column;gap:12px}
-.game:hover{border-color:rgba(139,92,246,.65);box-shadow:0 0 36px rgba(139,92,246,.22)}
-.game h3{margin:0;font-size:1.5rem}
-.game p{margin:0;color:var(--muted)}
-.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
-.tag{font-size:.8rem;padding:4px 11px;border-radius:999px;border:1px solid var(--line);color:#cfd3f5}
-.tag.live{border-color:rgba(79,140,255,.6);background:rgba(79,140,255,.14);color:#cfe0ff}
-.about{display:grid;grid-template-columns:1.2fr 1fr;gap:34px;align-items:start}
-@media(max-width:800px){.about{grid-template-columns:1fr}}
-.about p{color:var(--muted);margin:0 0 14px}
-.facts{padding:26px;display:grid;gap:16px}
-.facts b{display:block;font-size:1.05rem}
-.facts span{color:var(--muted);font-size:.93rem}
-.owner{padding:26px;margin-bottom:16px;background:linear-gradient(135deg,rgba(79,140,255,.14),rgba(139,92,246,.12));box-shadow:0 0 50px rgba(110,100,255,.2)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:14px}
-.card{padding:20px;display:flex;flex-direction:column;gap:10px}
-.head{display:flex;align-items:center;gap:10px}
-.head h3{margin:0;font-size:1.1rem}
-.ico{font-size:1.4rem}
-.tasks{margin:0;color:var(--muted);font-size:.93rem}
-.chip{display:inline-block;font-size:.85rem;padding:4px 11px;border-radius:999px;background:rgba(79,140,255,.14);border:1px solid rgba(79,140,255,.4);color:#cfe0ff;margin:0 6px 6px 0}
-.chip.open{background:transparent;border:1px dashed var(--open);color:var(--open)}
-.join{padding:44px 28px;text-align:center;background:linear-gradient(135deg,rgba(79,140,255,.16),rgba(139,92,246,.16));box-shadow:0 0 60px rgba(110,100,255,.22)}
-.join p{color:var(--muted);max-width:52ch;margin:0 auto 24px}
-.roles{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:0 0 26px}
-/* Wiki */
-.wbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
-.wbar input{flex:1 1 240px;padding:12px 16px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text);font:inherit}
-.wbar input:focus{outline:2px solid var(--blue)}
-.cats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
-.cat{font:inherit;font-size:.9rem;padding:7px 15px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer}
-.cat.on{background:linear-gradient(90deg,var(--blue),var(--violet));color:#fff;border-color:transparent}
-.wiki{display:grid;gap:10px}
-.art{padding:0;overflow:hidden}
-.art summary{cursor:pointer;list-style:none;padding:16px 20px;display:flex;align-items:center;gap:12px;font-weight:600}
-.art summary::-webkit-details-marker{display:none}
-.art summary::after{content:"+";margin-left:auto;color:var(--violet);font-size:1.4rem}
-.art[open] summary::after{content:"–"}
-.art .body{padding:0 20px 18px;color:var(--muted)}
-.art .body p{margin:0 0 8px}
-.art .tag{margin-left:0}
-.none{color:var(--muted);padding:20px;text-align:center}
-.news{display:grid;gap:10px}.nitem{padding:16px 20px}.nitem small{color:var(--violet);font-weight:600}.nitem b{display:block}.nitem span{color:var(--muted)}
-.cd{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}.cd div{padding:12px 18px;text-align:center;min-width:76px}.cd b{display:block;font-size:1.8rem}.cd span{color:var(--muted);font-size:.8rem}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.stat{padding:20px;text-align:center}.stat b{display:block;font-size:2rem}.stat span{color:var(--muted);font-size:.9rem}
-.road{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}.col{padding:18px}.col h3{margin:0 0 10px;font-size:1rem}.col p{margin:0 0 8px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.05);font-size:.93rem}
-.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}.ph{aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.9rem;text-align:center;padding:10px}
-form.ap{display:grid;gap:12px;padding:26px;max-width:620px}form.ap input,form.ap select,form.ap textarea,.adm input{font:inherit;padding:11px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text);width:100%}
-.msg{color:var(--muted);font-size:.93rem}.app{padding:18px;margin-bottom:10px}.app p{margin:4px 0;color:var(--muted)}.acts{display:flex;gap:8px;margin-top:10px}.acts button{font:inherit;padding:7px 14px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--text);cursor:pointer}.st{font-size:.8rem;padding:3px 10px;border-radius:999px;border:1px solid var(--line)}
-footer{border-top:1px solid var(--line);padding:30px 0 40px;color:var(--muted);font-size:.9rem}
-footer .w{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}
-footer a{color:var(--muted)}
-a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+:root{
+  --bg:#F5F5FA;--surface:#FFFFFF;--line:#DCDDE8;--text:#14151C;--muted:#555A6E;
+  --brand:#5B3DF5;--accent:#0E8FA8;--onbrand:#FFFFFF;--open:#B7791F;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#0E1015;--surface:#1A1D26;--line:#2A2E3B;--text:#E8EAF0;--muted:#9AA0B3;--brand:#8F78FF;--accent:#22D3EE;--onbrand:#0E1015;--open:#FBBF24}
+}
+:root[data-theme="dark"]{--bg:#0E1015;--surface:#1A1D26;--line:#2A2E3B;--text:#E8EAF0;--muted:#9AA0B3;--brand:#8F78FF;--accent:#22D3EE;--onbrand:#0E1015;--open:#FBBF24}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.6 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+h1,h2,h3{font-family:"Space Grotesk",Inter,system-ui,sans-serif;line-height:1.1;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--brand);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+section{padding:88px 0}
+section h2{font-size:clamp(28px,4vw,40px);margin-bottom:16px}
+.lead{color:var(--muted);max-width:60ch;margin:0 0 40px}
+header.top{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;max-width:1040px;margin:0 auto}
+.brand{font:700 20px "Space Grotesk",sans-serif;letter-spacing:.12em;text-decoration:none}
+nav a{margin-left:24px;text-decoration:none;color:var(--muted);font-weight:500}
+nav a:hover{color:var(--text)}
+@media(max-width:640px){nav a.hide-m{display:none}}
+
+.hero{padding:56px 0 96px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.hero h1{font-size:clamp(56px,11vw,128px);letter-spacing:-.02em}
+.hero p{font-size:20px;color:var(--muted);max-width:34ch;margin:20px 0 32px}
+.mark{width:100%;max-width:380px;justify-self:center}
+.mark .frame{fill:none;stroke:var(--line);stroke-width:6}
+.mark .v{fill:none;stroke:var(--brand);stroke-width:26;stroke-linecap:square;stroke-linejoin:miter}
+.mark .spark{fill:var(--accent)}
+.mark .v{stroke-dasharray:520;stroke-dashoffset:520;animation:draw 1.2s .2s ease-out forwards}
+.mark .spark{opacity:0;animation:pop .4s 1.2s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes pop{to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.mark .v{animation:none;stroke-dashoffset:0}.mark .spark{animation:none;opacity:1}html{scroll-behavior:auto}}
+@media(max-width:760px){.hero-grid{grid-template-columns:1fr}.mark{max-width:240px;order:-1;justify-self:start}}
+
+.btn{display:inline-block;background:var(--brand);color:var(--onbrand);font:700 16px "Space Grotesk",sans-serif;padding:14px 26px;border-radius:8px;text-decoration:none;min-height:48px}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--text);border:2px solid var(--line);margin-left:12px}
+
+.band{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:32px}
+.facts h3{font-size:20px;margin-bottom:8px}
+.facts p{margin:0;color:var(--muted)}
+
+.team{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.member{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:20px}
+.member h3{font-size:19px}
+.member .who{margin:6px 0 10px;font-weight:500}
+.member p{margin:0;color:var(--muted);font-size:15px}
+.member.open{border-style:dashed;background:transparent}
+.member.open .who{color:var(--open)}
+.member.open a{font-weight:500;font-size:15px}
+.group{font:700 22px "Space Grotesk",sans-serif;margin:40px 0 16px}
+.group:first-of-type{margin-top:0}
+
+.steps{list-style:none;margin:0;padding:0;border-left:3px solid var(--brand)}
+.steps li{padding:0 0 28px 28px;position:relative}
+.steps li::before{content:"";position:absolute;left:-9px;top:8px;width:15px;height:15px;background:var(--bg);border:3px solid var(--brand);border-radius:50%}
+.steps h3{font-size:20px;margin-bottom:4px}
+.steps p{margin:0;color:var(--muted);max-width:62ch}
+
+.cta{text-align:left}
+.cta .box{background:var(--brand);color:var(--onbrand);border-radius:12px;padding:56px 40px}
+.cta h2{margin-bottom:12px}
+.cta p{margin:0 0 28px;max-width:52ch;opacity:.92}
+.cta .btn{background:var(--onbrand);color:var(--brand)}
+footer{padding:40px 24px;text-align:center;color:var(--muted);font-size:15px}
 </style>
 </head>
 <body>
-<header><div class="w"><nav>
-<a class="logo" href="#top">VYROX <i>Studios</i></a>
-<div class="links"><a href="#games">Spiele</a><a href="#studio">Studio</a><a href="#team">Team</a><a href="#news">News</a><a href="#roadmap">Roadmap</a><a href="#galerie">Galerie</a><a href="#wiki">Wiki</a><a href="#bewerben">Bewerben</a><a class="btn" href="https://discord.gg/gCnnK39uDU" target="_blank" rel="noopener">Discord</a></div>
-</nav></div></header>
+<header class="top">
+  <a class="brand" href="#top">VYROX</a>
+  <nav aria-label="Hauptnavigation">
+    <a class="hide-m" href="#studio">Studio</a>
+    <a href="#team">Team</a>
+    <a class="hide-m" href="#ablauf">Ablauf</a>
+    <a href="#community">Community</a>
+  </nav>
+</header>
 
 <main id="top">
-<div class="w hero">
-<h1>Roblox-Spiele mit <span>Charakter.</span></h1>
-<p>VYROX Studios ist ein unabhängiges Roblox Game Development Studio. Wir entwickeln Hangout-Welten und Horror-Geschichten, gemeinsam mit unserer Community.</p>
-<div class="cta"><a class="btn" href="#games">Unsere Spiele</a><a class="btn ghost" href="#wiki">Zum Wiki</a><a class="btn ghost" href="#join">Im Team mitmachen</a></div>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>VYROX</h1>
+      <p>Wir bauen hochwertige, kreative und immersive Roblox-Spiele. Build Beyond Limits.</p>
+      <a class="btn" href="https://discord.gg/NrqHgxPaRA" rel="noopener">Discord beitreten</a>
+      <a class="btn ghost" href="#team">Team ansehen</a>
+    </div>
+    <svg class="mark" viewBox="0 0 240 240" role="img" aria-label="VYROX Bildmarke: ein V, das aus einem Rahmen ausbricht">
+      <path class="frame" d="M30 80 V30 H210 V210 H30 V160"/>
+      <path class="v" d="M55 40 L120 190 L185 20"/>
+      <rect class="spark" x="176" y="12" width="18" height="18"/>
+    </svg>
+  </div>
+</section>
+
+<div class="band" id="studio">
+<section>
+  <div class="wrap">
+    <h2>Ein Studio, das verlässlich arbeitet</h2>
+    <p class="lead">VYROX Studios ist ein Roblox-Entwicklerstudio mit klaren Zuständigkeiten, sauberer Technik und offener Kommunikation. Das Team wächst Schritt für Schritt.</p>
+    <div class="facts">
+      <div><h3>Klare Verantwortung</h3><p>Jede Aufgabe hat eine zuständige Person, einen Status und eine Definition von „fertig“.</p></div>
+      <div><h3>Saubere Technik</h3><p>Serverseitige Logik, geprüfte Remotes, zuverlässige Datenspeicherung und Tests auf PC und Handy.</p></div>
+      <div><h3>Ehrliche Qualität</h3><p>Nichts geht live ohne Review, Testbericht und gemeinsame Freigabe der Owner.</p></div>
+    </div>
+  </div>
+</section>
 </div>
 
-<section id="news"><div class="w">
-<h2>News &amp; Updates</h2><p class="sub" id="cdl"></p><div class="cd" id="cd"></div>
-<div class="news" id="nw" style="margin:26px 0"></div>
-<div class="stats" id="st"></div>
-<div id="stadm" class="msg" style="margin-top:10px"></div>
-</div></section>
+<section id="team">
+  <div class="wrap">
+    <h2>Das Team</h2>
+    <p class="lead">Offene Positionen sind gestrichelt markiert. Du kannst gut etwas davon? Schreib uns auf Discord.</p>
 
-<section id="games"><div class="w">
-<h2>Unsere Spiele</h2>
-<p class="sub">Zwei Projekte sind in Arbeit. Neuigkeiten und Releases gibt es zuerst auf Discord.</p>
-<div class="games">
-<article class="glass game"><h3>MilanHD Hangout</h3><p>Ein sozialer Treffpunkt zum Chatten, Entdecken und Zeit verbringen mit Freunden.</p><div class="tags"><span class="tag">Social / Hangout</span><span class="tag live">In Entwicklung</span></div></article>
-<article class="glass game"><h3>MilanHD Horror Project</h3><p>Ein Story-Horrorspiel in Kapiteln mit Rätseln, Monstern und einer Geschichte, die sich Stück für Stück öffnet.</p><div class="tags"><span class="tag">Horror / Story</span><span class="tag live">In Entwicklung</span></div></article>
-</div></div></section>
+    <h3 class="group">Studioleitung und Technik</h3>
+    <div class="team">
+      <div class="member"><h3>Owner</h3><div class="who">@MilanHD ✞ und @Marek</div><p>Gesamtleitung, Strategie, Qualitätsstandards und Freigabe von Updates und Releases.</p></div>
+      <div class="member open"><h3>Lead Developer</h3><div class="who">Offen</div><p>Technische Leitung, Architektur, Code-Reviews und Coding-Standards.</p><a href="https://discord.gg/NrqHgxPaRA" rel="noopener">Auf Discord bewerben</a></div>
+      <div class="member open"><h3>Scripter</h3><div class="who">Offen</div><p>Luau-Systeme, Gameplay, Datenspeicherung, Multiplayer und Performance.</p><a href="https://discord.gg/NrqHgxPaRA" rel="noopener">Auf Discord bewerben</a></div>
+    </div>
 
-<section id="studio"><div class="w about">
-<div><h2>Das Studio</h2>
-<p>Hinter VYROX Studios steht ein Team aus Buildern, Modelern, Testern und Community-Leuten. Wir bauen Spiele, die wir selbst gern spielen würden.</p>
-<p>Wir arbeiten offen mit der Community: Feedback fließt direkt in Updates, und Tester sind von Anfang an dabei.</p></div>
-<div class="glass facts">
-<div><b>Unabhängig</b><span>Eigene Spiele, eigene Ideen, keine Vorgaben von außen.</span></div>
-<div><b>Community-nah</b><span>Ankündigungen, Umfragen und Tests laufen über unseren Discord.</span></div>
-<div><b>Wachsend</b><span>Mehrere Rollen im Team sind noch offen, vielleicht deine.</span></div>
-</div></div></section>
+    <h3 class="group">Kreativ und Produktion</h3>
+    <div class="team">
+      <div class="member"><h3>Builder / Environment Artist</h3><div class="who">@𝐇𝐨𝐟𝐟𝐢 • :)</div><p>Maps, Lobbys, Leveldesign und atmosphärische Spielwelten.</p></div>
+      <div class="member"><h3>3D Modeler</h3><div class="who">@𝙵𝚘𝚛𝚎𝚟𝟹𝚛𝚇 ジ</div><p>Eigene Modelle, Props und optimierte Meshes im einheitlichen Stil.</p></div>
+      <div class="member"><h3>Video Editor</h3><div class="who">@MilanHD ✞</div><p>Trailer, Teaser, Gameplay-Videos und Social-Media-Clips.</p></div>
+      <div class="member open"><h3>UI/UX Designer</h3><div class="who">Offen</div><p>HUD, Menüs, Inventar, Shop und Bedienbarkeit auf Handy und PC.</p><a href="https://discord.gg/NrqHgxPaRA" rel="noopener">Auf Discord bewerben</a></div>
+      <div class="member open"><h3>Animator</h3><div class="who">Offen</div><p>Charakter-, NPC- und Monsteranimationen sowie Zwischensequenzen.</p><a href="https://discord.gg/NrqHgxPaRA" rel="noopener">Auf Discord bewerben</a></div>
+      <div class="member open"><h3>Sound Designer</h3><div class="who">Offen</div><p>Soundeffekte, Atmosphäre, Musik und dynamisches Audio.</p><a href="https://discord.gg/NrqHgxPaRA" rel="noopener">Auf Discord bewerben</a></div>
+      <div class="member open"><h3>GFX Designer</h3><div class="who">Offen</div><p>Thumbnails, Icons, Banner und Update-Grafiken.</p><a href="https://discord.gg/NrqHgxPaRA" rel="noopener">Auf Discord bewerben</a></div>
+    </div>
 
-<section id="roadmap"><div class="w"><h2>Roadmap</h2><p class="sub">Was ist fertig, was ist in Arbeit, was kommt als Nächstes?</p><div class="road" id="rd"></div></div></section>
+    <h3 class="group">Qualität und Community</h3>
+    <div class="team">
+      <div class="member"><h3>QA Tester</h3><div class="who">@Ben</div><p>Systematische Tests und reproduzierbare Bug-Reports.</p></div>
+      <div class="member"><h3>Community Manager</h3><div class="who">@Ben</div><p>Ankündigungen, Spielerfeedback und Community-Aktivitäten.</p></div>
+      <div class="member"><h3>Moderator</h3><div class="who">@xLouis</div><p>Regeln durchsetzen und eine respektvolle Community schützen.</p></div>
+    </div>
+  </div>
+</section>
 
-<section id="galerie"><div class="w"><h2>Galerie</h2><p class="sub">Screenshots, Trailer und Concept Art. Videos und Shorts findest du auf unserem <a href="https://www.youtube.com/@MilanHD_YTC/shorts" target="_blank" rel="noopener" style="color:var(--blue)">YouTube-Kanal</a>.</p><div class="gal" id="gl"></div></div></section>
+<div class="band" id="ablauf">
+<section>
+  <div class="wrap">
+    <h2>So entsteht ein Spiel bei uns</h2>
+    <p class="lead">Zwölf Phasen, hier in fünf Etappen zusammengefasst. Für Tests und Bugfixing planen wir bewusst genug Zeit ein.</p>
+    <ol class="steps">
+      <li><h3>Idee und Plan</h3><p>Konzept, Game Design Document und technische Planung.</p></li>
+      <li><h3>Prototyp</h3><p>Eine spielbare Minimalversion zeigt, ob die Idee trägt.</p></li>
+      <li><h3>Produktion</h3><p>Kernmechaniken, Maps, Modelle, Animationen, Audio und Oberfläche entstehen und werden zusammengeführt.</p></li>
+      <li><h3>Testen und Verbessern</h3><p>Interne Tests, Bugfixing und Performance-Optimierung auf PC und Mobilgeräten.</p></li>
+      <li><h3>Release und Updates</h3><p>Veröffentlichung nach Freigabe der Owner, danach regelmäßige Updates mit Spielerfeedback.</p></li>
+    </ol>
+  </div>
+</section>
+</div>
 
-<section id="team"><div class="w">
-<h2>Das Team</h2>
-<p class="sub" id="count"></p>
-<div id="owner"></div><div class="grid" id="grid"></div>
-</div></section>
-
-<section id="wiki"><div class="w">
-<h2>Wiki</h2>
-<p class="sub">Alles Wichtige zu unseren Spielen, dem Team und der Community an einem Ort. Suche einen Begriff oder wähle eine Kategorie.</p>
-<div class="wbar"><input id="q" type="search" placeholder="Wiki durchsuchen …" aria-label="Wiki durchsuchen"></div>
-<div class="cats" id="cats"></div>
-<div class="wiki" id="wk"></div>
-</div></section>
-
-<section id="bewerben"><div class="w">
-<h2>Bewerbung</h2><p class="sub">Bewirb dich direkt hier für eine offene Rolle im Studio.</p>
-<form class="glass ap" id="apf"><input id="an" placeholder="Name / Discord-Name" required maxlength="60"><select id="ar"></select><input id="aa" type="number" placeholder="Alter" min="5" max="99"><textarea id="at" rows="4" placeholder="Erzähl uns von dir und was du kannst" required maxlength="1200"></textarea><button class="btn" type="submit">Bewerbung abschicken</button><div class="msg" id="am"></div></form>
-<div id="adm" class="adm" style="margin-top:34px"></div>
-</div></section>
-
-<section id="join"><div class="w"><div class="glass join">
-<h2>Werde Teil des Studios</h2>
-<p>Wir suchen Verstärkung. Komm auf unseren Discord, stell dich vor und zeig uns, was du kannst.</p>
-<div class="roles" id="roles"></div>
-<a class="btn" href="https://discord.gg/gCnnK39uDU" target="_blank" rel="noopener">Discord beitreten</a>
-</div></div></section>
+<section class="cta" id="community">
+  <div class="wrap">
+    <div class="box">
+      <h2>Komm auf unseren Discord</h2>
+      <p>Hier erfährst du Neuigkeiten, kannst Vorschläge und Bugs melden und direkt mit dem Team sprechen.</p>
+      <a class="btn" href="https://discord.gg/NrqHgxPaRA" rel="noopener">Discord beitreten</a>
+    </div>
+  </div>
+</section>
 </main>
 
-<footer><div class="w"><span>© 2026 VYROX Studios</span><span><a href="https://discord.gg/gCnnK39uDU" target="_blank" rel="noopener">Discord</a> · <a href="https://www.youtube.com/@MilanHD_YTC/shorts" target="_blank" rel="noopener">YouTube</a></span></div></footer>
-
-<script>
-var TEAM=[
-{i:"👑",r:"Owner (Inhaber)",m:["MilanHD ✞","Dimano"],t:"Studio leiten, Entscheidungen treffen, Updates planen, Team verwalten.",o:1},
-{i:"💻",r:"Lead Developer",m:[],t:"Entwickler leiten, Code kontrollieren, neue Systeme planen."},
-{i:"🖥️",r:"Scripter",m:[],t:"Features programmieren, Bugs beheben, neue Spielsysteme entwickeln."},
-{i:"🏗️",r:"Builder",m:["𝐇𝐨𝐟𝐟𝐢 • :)"],t:"Maps bauen, Gebäude erstellen, Lobby verschönern, Kapitel gestalten."},
-{i:"🎨",r:"UI Designer",m:[],t:"Menüs designen, HUD erstellen, Inventar und Ladebildschirm gestalten."},
-{i:"🧱",r:"3D Modeler",m:["𝙵𝚘𝚛𝚎𝚟𝟹𝚛𝚇 ジ"],t:"3D-Modelle, Gegenstände und Dekorationen erstellen."},
-{i:"🎞️",r:"Animator",m:[],t:"NPC-Animationen, Charakterbewegungen und Zwischensequenzen erstellen."},
-{i:"🎵",r:"Sound Designer",m:[],t:"Musik, Soundeffekte, Gruselgeräusche und Umgebungsgeräusche erstellen."},
-{i:"🧪",r:"Tester",m:["Ben"],t:"Updates testen, Bugs melden, Rätsel überprüfen und Feedback geben."},
-{i:"📷",r:"GFX Designer",m:[],t:"Logos, Thumbnails, Banner, Profilbilder und Icons gestalten."},
-{i:"🎬",r:"Video Editor",m:["MilanHD ✞"],t:"Trailer schneiden, Shorts bearbeiten und Update-Videos erstellen."},
-{i:"📢",r:"Community Manager",m:["Ben"],t:"Discord verwalten, Ankündigungen schreiben, Feedback sammeln und die Community betreuen."},
-{i:"🛡️",r:"Moderator",m:["xLouis"],t:"Regeln durchsetzen, Meldungen bearbeiten, Spam verhindern und bei Streitigkeiten helfen."}
-];
-function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!==undefined)e.textContent=x;return e}
-var g=document.getElementById("grid"),ow=document.getElementById("owner"),rl=document.getElementById("roles"),open=0;
-TEAM.forEach(function(x){
-var c=el("div",x.o?"glass owner":"glass card"),h=el("div","head");
-h.appendChild(el("span","ico",x.i));h.appendChild(el("h3","",x.r));c.appendChild(h);
-var m=el("div","");
-if(x.m.length){x.m.forEach(function(n){m.appendChild(el("span","chip",n))})}
-else{open++;m.appendChild(el("span","chip open","Noch nicht besetzt"));rl.appendChild(el("span","tag live",x.r))}
-c.appendChild(m);c.appendChild(el("p","tasks",x.t));(x.o?ow:g).appendChild(c);
-});
-document.getElementById("count").textContent=(TEAM.length-open)+" von "+TEAM.length+" Rollen sind besetzt, "+open+" sind offen.";
-
-/* Wiki */
-var WIKI=[
-{c:"Spiele",t:"MilanHD Hangout",b:["Sozialer Treffpunkt in Roblox zum Chatten, Entdecken und Zeit verbringen mit Freunden.","Status: In Entwicklung. Releases und Tests werden zuerst auf Discord angekündigt."]},
-{c:"Spiele",t:"MilanHD Horror Project",b:["Story-Horrorspiel in Kapiteln mit Rätseln, Monstern und einer Geschichte, die sich Stück für Stück öffnet.","Status: In Entwicklung. Kapitel 1 wird aktuell ausgearbeitet."]},
-{c:"Spiele",t:"Wann erscheinen die Spiele?",b:["Es gibt noch keine festen Release-Termine. Neuigkeiten, Updates und Testphasen posten wir zuerst auf unserem Discord."]},
-{c:"Team",t:"Rollen im Studio",b:["Owner, Lead Developer, Scripter, Builder, UI Designer, 3D Modeler, Animator, Sound Designer, Tester, GFX Designer, Video Editor, Community Manager und Moderator.","Die Aufgaben jeder Rolle und wer sie besetzt, findest du im Bereich „Das Team“."]},
-{c:"Team",t:"Wie kann ich im Team mitmachen?",b:["Tritt unserem Discord bei, stell dich kurz vor und zeig uns, was du kannst (z. B. Builds, Modelle, Skripte oder Designs).","Besonders gesucht sind die Rollen, die auf der Seite als „Noch nicht besetzt“ markiert sind."]},
-{c:"Community",t:"Discord",b:["Unser Discord ist die Zentrale für Ankündigungen, Umfragen, Tests, Support und Feedback.","Einladung: https://discord.gg/gCnnK39uDU"]},
-{c:"Community",t:"Bugs melden & Feedback geben",b:["Melde Bugs und Ideen auf dem Discord. Gib an, was passiert ist, wo im Spiel es passierte und, wenn möglich, einen Screenshot.","Tester prüfen Meldungen und geben sie an die Entwickler weiter."]},
-{c:"Community",t:"Regeln",b:["Sei respektvoll, kein Spam, keine Beleidigungen, keine Werbung ohne Erlaubnis.","Moderatoren setzen die Regeln durch und helfen bei Streitigkeiten."]},
-{c:"Allgemein",t:"Was ist VYROX Studios?",b:["Ein unabhängiges Roblox Game Development Studio mit Fokus auf Hangout-Welten und Horror-Geschichten, entwickelt gemeinsam mit der Community."]},
-{c:"Allgemein",t:"Wo finde ich Videos?",b:["Auf unserem YouTube-Kanal: https://www.youtube.com/@MilanHD_YTC/shorts"]}
-];
-var cats=["Alle"].concat(WIKI.map(function(a){return a.c}).filter(function(v,i,a){return a.indexOf(v)===i})),cur="Alle",wk=document.getElementById("wk"),cb=document.getElementById("cats"),q=document.getElementById("q");
-function draw(){
-var s=q.value.trim().toLowerCase(),n=0;wk.textContent="";
-WIKI.forEach(function(a){
-if(cur!=="Alle"&&a.c!==cur)return;
-if(s&&(a.t+" "+a.b.join(" ")+" "+a.c).toLowerCase().indexOf(s)<0)return;
-n++;var d=el("details","glass art"),m=el("summary","");
-m.appendChild(el("span","tag",a.c));m.appendChild(el("span","",a.t));d.appendChild(m);
-var b=el("div","body");a.b.forEach(function(p){b.appendChild(el("p","",p))});d.appendChild(b);
-if(s)d.open=true;wk.appendChild(d)});
-if(!n)wk.appendChild(el("div","none","Keine Wiki-Einträge gefunden."));
-}
-cats.forEach(function(c){var b=el("button","cat"+(c===cur?" on":""),c);b.type="button";
-b.onclick=function(){cur=c;[].forEach.call(cb.children,function(x){x.className="cat"+(x.textContent===c?" on":"")});draw()};cb.appendChild(b)});
-q.addEventListener("input",draw);draw();
-
-/* News, Roadmap, Galerie, Countdown, Zahlen, Bewerbung */
-var NEWS=[{d:"21.10.2026",t:"Wiki online",b:"Das Studio-Wiki ist jetzt auf der Website verfügbar."},{d:"21.10.2026",t:"Bewerbungen offen",b:"Du kannst dich ab sofort direkt über die Website bewerben."}];
-var ROAD=[["Fertig",["Studio-Website","Wiki"]],["In Arbeit",["MilanHD Hangout","MilanHD Horror Project – Kapitel 1"]],["Geplant",["Erster öffentlicher Test","Horror Project Release (16.10.2027)"]]];
-var CD={label:"Release von MilanHD Horror Project am 16.10.2027",date:"2027-10-16T00:00:00"};
-var GAL=["Screenshot folgt","Screenshot folgt","Trailer folgt","Concept Art folgt"];
-var $=function(i){return document.getElementById(i)};
-NEWS.forEach(function(n){var c=el("div","glass nitem");c.appendChild(el("small","",n.d));c.appendChild(el("b","",n.t));c.appendChild(el("span","",n.b));$("nw").appendChild(c)});
-ROAD.forEach(function(r){var c=el("div","glass col");c.appendChild(el("h3","",r[0]));r[1].forEach(function(x){c.appendChild(el("p","",x))});$("rd").appendChild(c)});
-GAL.forEach(function(x){$("gl").appendChild(el("div","glass ph",x))});
-function tick(){var b=$("cd");b.textContent="";if(!CD.date){$("cdl").textContent=CD.label+": Termin folgt. Neuigkeiten zuerst auf Discord.";return}
-$("cdl").textContent=CD.label;var s=Math.max(0,Math.floor((new Date(CD.date)-new Date())/1000)),p=[["Tage",86400],["Std",3600],["Min",60],["Sek",1]];
-p.forEach(function(u){var v=Math.floor(s/u[1]);s-=v*u[1];var d=el("div","glass");d.appendChild(el("b","",String(v)));d.appendChild(el("span","",u[0]));b.appendChild(d)})}
-tick();setInterval(tick,1000);
-var SL=[["players","Spieler online"],["visits","Besuche"],["members","Discord-Mitglieder"]];
-function stats(v){$("st").textContent="";SL.forEach(function(s){var c=el("div","glass stat");c.appendChild(el("b","",v&&v[s[0]]!=null?String(v[s[0]]):"–"));c.appendChild(el("span","",s[1]));$("st").appendChild(c)})}
-stats(null);
-TEAM.forEach(function(x){if(!x.m.length){var o=el("option","",x.r);$("ar").appendChild(o)}});
-var ST={Neu:"Neu",Angenommen:"Angenommen ✅",Abgelehnt:"Abgelehnt ❌"};
-(async function(){
-var db=null,user=null;try{db=await claude.use("db");user=await claude.use("user")}catch(e){}
-var admin=false,uid=null;try{admin=user?await user.canEdit():false;uid=user?await user.id():null}catch(e){}
-if(!db){$("am").textContent="Das Bewerbungsformular ist in dieser Ansicht nicht verfügbar. Bewirb dich bitte auf unserem Discord.";$("apf").querySelector("button").disabled=true;return}
-try{db.doc("site/stats").onSnapshot(function(s){stats(s.exists?s.data():null)},function(){})}catch(e){}
-var canW=true;try{canW=user?(await user.can("data.write"))!==false:false}catch(e){}
-if(!canW||!uid)$("am").textContent="Zum Absenden musst du eingeloggt sein. Sonst bewirb dich bitte auf Discord.";
-$("apf").addEventListener("submit",async function(e){e.preventDefault();$("am").textContent="Wird gesendet …";
-try{await db.doc("applications/"+uid).set({name:$("an").value,role:$("ar").value,age:$("aa").value,text:$("at").value,status:"Neu",at:new Date().toISOString()});$("am").textContent="Danke! Deine Bewerbung ist angekommen.";$("apf").reset()}catch(x){var T="Bewerbung\nName: "+$("an").value+"\nRolle: "+$("ar").value+"\nAlter: "+$("aa").value+"\n"+$("at").value;$("am").textContent="Direktes Senden ist für dich nicht möglich. Kopiere diesen Text und schick ihn uns auf Discord:";var ta=el("textarea","",T);ta.readOnly=true;ta.rows=5;ta.style.cssText="margin-top:8px";ta.onclick=function(){ta.select()};$("am").appendChild(ta)}});
-var a=$("adm"),H="89125ae87074abac73954debc69f4b9c40dc7de9e97f01e2de90891ceaf4b247";
-var gb=el("button","btn ghost","🔒 Admin-Bereich");gb.type="button";a.appendChild(gb);
-var gf=el("div","");gf.style.cssText="display:none;gap:8px;margin-top:12px;max-width:420px";var gi=document.createElement("input");gi.type="password";gi.placeholder="Admin-Passwort";var go=el("button","btn","Entsperren");go.type="button";var gm=el("div","msg");gm.style.marginTop="8px";gf.appendChild(gi);gf.appendChild(go);a.appendChild(gf);a.appendChild(gm);
-gb.onclick=function(){gf.style.display="flex";gi.focus()};
-async function unlock(){var h=Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256",new TextEncoder().encode(gi.value)))).map(function(x){return x.toString(16).padStart(2,"0")}).join("");
-if(h!==H){gm.textContent="Falsches Passwort.";return}
-if(!admin){gm.textContent="Passwort stimmt, aber du musst auf claude.ai mit dem Owner-Account eingeloggt sein, um Bewerbungen zu sehen.";return}
-gb.remove();gf.remove();gm.remove();openAdmin()}
-go.onclick=unlock;gi.addEventListener("keydown",function(e){if(e.key==="Enter")unlock()});
-function openAdmin(){a.appendChild(el("h2","","Admin: Bewerbungen"));var lst=el("div","");a.appendChild(lst);
-var sd=$("stadm");sd.textContent="Admin: Zahlen setzen ";SL.forEach(function(s){var i=document.createElement("input");i.type="number";i.placeholder=s[1];i.style.cssText="width:150px;margin:4px";i.id="s_"+s[0];sd.appendChild(i)});
-var sb=el("button","cat","Speichern");sb.onclick=function(){var o={};SL.forEach(function(s){var v=$("s_"+s[0]).value;if(v!=="")o[s[0]]=Number(v)});db.doc("site/stats").set(o)};sd.appendChild(sb);
-db.collection("applications").onSnapshot(function(sn){lst.textContent="";if(sn.empty){lst.appendChild(el("p","msg","Noch keine Bewerbungen."));return}
-sn.docs.forEach(function(d){var v=d.data(),c=el("div","glass app");c.appendChild(el("b","",v.name+" → "+v.role));c.appendChild(el("span","st",ST[v.status]||v.status));c.appendChild(el("p","","Alter: "+(v.age||"–")));c.appendChild(el("p","",v.text));
-var ac=el("div","acts");[["Angenommen","Annehmen"],["Abgelehnt","Ablehnen"]].forEach(function(k){var b=el("button","",k[1]);b.onclick=function(){db.doc("applications/"+d.id).update({status:k[0]})};ac.appendChild(b)});c.appendChild(ac);lst.appendChild(c)})},function(){})
-}
-})();
-</script>
+<footer>© 2026 VYROX Studios · Build Beyond Limits.</footer>
 </body>
 </html>
